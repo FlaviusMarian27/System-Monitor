@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 4.1)
 project(System_Monitor C)
 
+add_compile_options(-Wall)
+
 set(CMAKE_C_STANDARD 11)
 
 add_executable(System_Monitor src/frontend/main.c
