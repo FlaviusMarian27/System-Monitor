@@ -3,6 +3,7 @@
 
 #include "cpu.h"
 #include "memory.h"
+#include "disk.h"
 
 typedef struct{
     char cpu_model[LEN_LINE];
@@ -15,6 +16,11 @@ typedef struct{
     double ram_total_gb;
     double ram_used_gb;
     double ram_usage_percent;
+
+    //pentru disk
+    double disk_total_gb;
+    double disk_used_gb;
+    double disk_usage_percent;
 }SystemMetrics;
 
 void get_system_metrics(SystemMetrics *metrics);

@@ -52,4 +52,16 @@ void get_system_metrics(SystemMetrics *metrics){
         metrics->ram_used_gb = 0.0;
         metrics->ram_usage_percent = 0.0;
     }
+
+    //pentru disk
+    DiskData disk_data = {0};
+    if (disk_get_data("/", &disk_data)) {
+        metrics->disk_total_gb = disk_data.total_gb;
+        metrics->disk_used_gb = disk_data.used_gb;
+        metrics->disk_usage_percent = disk_data.usage_percent;
+    } else {
+        metrics->disk_total_gb = 0.0;
+        metrics->disk_used_gb = 0.0;
+        metrics->disk_usage_percent = 0.0;
+    }
 }
