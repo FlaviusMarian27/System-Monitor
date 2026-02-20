@@ -4,6 +4,7 @@
 #include "cpu.h"
 #include "memory.h"
 #include "disk.h"
+#include "sysinfo.h"
 
 typedef struct{
     char cpu_model[LEN_LINE];
@@ -21,6 +22,11 @@ typedef struct{
     double disk_total_gb;
     double disk_used_gb;
     double disk_usage_percent;
+
+    //detalii OS
+    long uptime_seconds;
+    char os_name[LEN_LINE];
+    char kernel_version[LEN_LINE];
 }SystemMetrics;
 
 void get_system_metrics(SystemMetrics *metrics);

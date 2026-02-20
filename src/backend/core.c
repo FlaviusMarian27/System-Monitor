@@ -64,4 +64,15 @@ void get_system_metrics(SystemMetrics *metrics){
         metrics->disk_used_gb = 0.0;
         metrics->disk_usage_percent = 0.0;
     }
+
+    // System Info
+    SysInfoData sys_data = {0};
+    if (sysinfo_get_data(&sys_data)) {
+        metrics->uptime_seconds = sys_data.uptime_seconds;
+        strncpy(metrics->os_name, sys_data.os_name, sizeof(metrics->os_name) - 1);
+        metrics->os_name[sizeof(metrics->os_name) - 1] = '\0';
+
+        strncpy(metrics->kernel_version, sys_data.kernel_version, sizeof(metrics->kernel_version) - 1);
+        metrics->kernel_version[sizeof(metrics->kernel_version) - 1] = '\0';
+    }
 }
