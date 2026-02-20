@@ -41,4 +41,15 @@ void get_system_metrics(SystemMetrics *metrics){
     for (int i = 0; i < metrics->core_count; i = i + 1){
         prev_cores[i] = curr_cores[i];
     }
+
+    MemoryData ram_data = {0};
+    if (memory_get_data(&ram_data)) {
+        metrics->ram_total_gb = ram_data.total_gb;
+        metrics->ram_used_gb = ram_data.used_gb;
+        metrics->ram_usage_percent = ram_data.usage_percent;
+    } else {
+        metrics->ram_total_gb = 0.0;
+        metrics->ram_used_gb = 0.0;
+        metrics->ram_usage_percent = 0.0;
+    }
 }
