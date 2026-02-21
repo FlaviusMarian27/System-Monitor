@@ -75,4 +75,21 @@ void get_system_metrics(SystemMetrics *metrics){
         strncpy(metrics->kernel_version, sys_data.kernel_version, sizeof(metrics->kernel_version) - 1);
         metrics->kernel_version[sizeof(metrics->kernel_version) - 1] = '\0';
     }
+
+    // GPU
+    GpuData gpu_data = {0};
+    if (gpu_get_data(&gpu_data)) {
+        strncpy(metrics->gpu_name, gpu_data.name, sizeof(metrics->gpu_name) - 1);
+        metrics->gpu_name[sizeof(metrics->gpu_name) - 1] = '\0';
+        metrics->gpu_usage_percent = gpu_data.usage_percent;
+
+        // MB -> GB
+        metrics->gpu_memory_total_gb = gpu_data.memory_total_mb / 1024.0;
+        metrics->gpu_memory_used_gb = gpu_data.memory_used_mb / 1024.0;
+    } else {
+        strncpy(metrics->gpu_name, "NVIDIA GPU Not Found", sizeof(metrics->gpu_name) - 1);
+        metrics->gpu_usage_percent = 0.0;
+        metrics->gpu_memory_total_gb = 0.0;
+        metrics->gpu_memory_used_gb = 0.0;
+    }
 }

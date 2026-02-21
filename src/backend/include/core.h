@@ -5,6 +5,7 @@
 #include "memory.h"
 #include "disk.h"
 #include "sysinfo.h"
+#include "gpu.h"
 
 typedef struct{
     char cpu_model[LEN_LINE];
@@ -27,6 +28,12 @@ typedef struct{
     long uptime_seconds;
     char os_name[LEN_LINE];
     char kernel_version[LEN_LINE];
+
+    // GPU
+    char gpu_name[LEN_LINE];
+    double gpu_usage_percent;
+    double gpu_memory_total_gb;
+    double gpu_memory_used_gb;
 }SystemMetrics;
 
 void get_system_metrics(SystemMetrics *metrics);
