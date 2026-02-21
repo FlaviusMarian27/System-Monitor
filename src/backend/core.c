@@ -92,4 +92,7 @@ void get_system_metrics(SystemMetrics *metrics){
         metrics->gpu_memory_total_gb = 0.0;
         metrics->gpu_memory_used_gb = 0.0;
     }
+
+    //Processes
+    metrics->process_count = processes_get_top(metrics->processes, MAX_PROCESSES);
 }

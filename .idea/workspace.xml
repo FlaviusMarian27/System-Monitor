@@ -25,10 +25,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9a614aec-6d25-46a3-8e26-cb2cfb66562b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/core.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/core.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/gpu.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/gpu.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/include/core.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/include/core.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/include/gpu.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/include/gpu.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,6 +102,12 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/backend/include" />
+      <recent name="$PROJECT_DIR$/src/backend" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="monitor" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="System_Monitor" TARGET_NAME="monitor" CONFIG_NAME="Debug">
       <method v="2">
@@ -120,7 +123,7 @@
       <option name="presentableId" value="Default" />
       <updated>1771606750761</updated>
       <workItem from="1771606751847" duration="4349000" />
-      <workItem from="1771696081995" duration="992000" />
+      <workItem from="1771696081995" duration="2155000" />
     </task>
     <servers />
   </component>

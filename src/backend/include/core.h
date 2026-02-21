@@ -6,6 +6,7 @@
 #include "disk.h"
 #include "sysinfo.h"
 #include "gpu.h"
+#include "processes.h"
 
 typedef struct{
     char cpu_model[LEN_LINE];
@@ -34,6 +35,10 @@ typedef struct{
     double gpu_usage_percent;
     double gpu_memory_total_gb;
     double gpu_memory_used_gb;
+
+    // Procese
+    int process_count;
+    ProcessData processes[MAX_PROCESSES];
 }SystemMetrics;
 
 void get_system_metrics(SystemMetrics *metrics);
