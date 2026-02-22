@@ -95,4 +95,14 @@ void get_system_metrics(SystemMetrics *metrics){
 
     //Processes
     metrics->process_count = processes_get_top(metrics->processes, MAX_PROCESSES);
+
+    // Retea
+    NetworkData net_data = {0};
+    if (network_get_data(&net_data)) {
+        metrics->net_rx_kbps = net_data.rx_speed_kbps;
+        metrics->net_tx_kbps = net_data.tx_speed_kbps;
+    } else {
+        metrics->net_rx_kbps = 0.0;
+        metrics->net_tx_kbps = 0.0;
+    }
 }

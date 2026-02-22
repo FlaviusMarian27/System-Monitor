@@ -7,6 +7,7 @@
 #include "sysinfo.h"
 #include "gpu.h"
 #include "processes.h"
+#include "network.h"
 
 typedef struct{
     char cpu_model[LEN_LINE];
@@ -39,6 +40,10 @@ typedef struct{
     // Procese
     int process_count;
     ProcessData processes[MAX_PROCESSES];
+
+    // Retea
+    double net_rx_kbps;
+    double net_tx_kbps;
 }SystemMetrics;
 
 void get_system_metrics(SystemMetrics *metrics);

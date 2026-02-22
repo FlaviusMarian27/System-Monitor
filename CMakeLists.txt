@@ -15,6 +15,7 @@ set(SOURCES
         src/backend/sysinfo.c
         src/backend/gpu.c
         src/backend/processes.c
+        src/backend/network.c
 )
 
 add_library(monitor SHARED ${SOURCES})
