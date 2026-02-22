@@ -10,6 +10,11 @@ include_directories(src/backend/include)
 set(SOURCES
         src/backend/core.c
         src/backend/cpu.c
+        src/backend/memory.c
+        src/backend/disk.c
+        src/backend/sysinfo.c
+        src/backend/gpu.c
+        src/backend/processes.c
 )
 
 add_library(monitor SHARED ${SOURCES})
