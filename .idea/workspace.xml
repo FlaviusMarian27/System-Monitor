@@ -27,9 +27,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f352520-d1ef-4332-a7d8-a275c9461623" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/create_shortcut.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +138,7 @@
       <workItem from="1771765214971" duration="52000" />
       <workItem from="1771765269158" duration="2165000" />
       <workItem from="1771767878326" duration="2059000" />
-      <workItem from="1771771459252" duration="653000" />
+      <workItem from="1771771459252" duration="1762000" />
     </task>
     <servers />
   </component>
