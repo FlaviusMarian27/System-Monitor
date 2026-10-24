@@ -1,51 +1,76 @@
-# 🖥️System Monitor
+# 🖥️ System Monitor
 
-A high-performance, visually stunning system monitoring dashboard for Linux.
-Built with a **blazing-fast C backend** for raw system data extraction and a **modern Python (PyQt6) frontend** for a beautiful, cyberpunk-inspired user interface.
+A fast, good-looking system monitoring dashboard for Linux.
+Built with a **C backend** that reads system data straight from `/proc` and a **Python (PyQt6) frontend** with a dark, neon-style interface.
 
-![System Monitor Screenshot](SM.png)
-*(Note: Replace `SM.png` with an actual screenshot of your app!)*
+![System Monitor v2](screenshots/v2.png)
 
 ## ✨ Features
 
-* **⚡ Native C Backend:** Reads system metrics directly from Linux `/proc` files and native APIs for zero-overhead monitoring.
-* **📊 Live CPU & RAM Tracking:** Real-time graphs and custom-drawn circular gauges (neon style).
-* **🎮 GPU Monitoring:** Live tracking of NVIDIA GPU utilization and VRAM usage.
-* **🌐 Network Activity:** Real-time download (RX) and upload (TX) speeds with history graphs.
-* **💽 Storage Info:** Root partition (`/`) usage gauge.
-* **💀 Interactive Task Manager:** View top CPU-consuming processes and **double-click any process to kill it** instantly.
-* **⏱️ System Info:** Displays live System Uptime and the current Kernel version.
+* **⚡ Native C backend:** reads metrics directly from `/proc`, `statvfs` and `uname`, with no extra tools needed (except `nvidia-smi` for the GPU).
+* **📊 CPU:** live usage graph, model, thread count, current frequency and **per-core usage bars**.
+* **🧠 RAM:** animated circular gauge with used / free / total.
+* **🎮 GPU:** NVIDIA GPU load and VRAM usage.
+* **📋 Processes:** top 30 processes by CPU, with CPU % and RAM % bars and the owning user.
+* **💽 Storage:** root partition (`/`) gauge, capacity bar and used / free / total.
+* **🌐 Network:** live download / upload speeds, peak values and a history graph.
+* **⏱️ System info:** uptime (plus boot time), kernel, distribution, architecture and core count.
+* **🕒 Header:** hostname, distribution, live indicator and clock.
 
-## 🛠️ Tech Stack
+## 🆕 What's new in v2
 
-* **Backend:** C (Compiled to a shared library `.so` via GCC / CMake)
-* **Frontend:** Python 3, PyQt6, pyqtgraph
-* **Bridge:** Python `ctypes` for seamless C-to-Python communication.
+* Redesigned UI (same color palette): gradient cards with shadows, animated gauges, chips, per-core bars, inline bars in the process table, a new header and a System Info card.
+* The process list is now read **directly from `/proc`** instead of `popen("ps")`, so it works on distributions where `ps` output can't be read (for example, Linux Mint).
+* Font fallback for Linux (JetBrains Mono → Fira Code → DejaVu Sans Mono), since Consolas doesn't exist on Linux.
 
-## 📦 Prerequisites
+<details>
+<summary>v1 screenshot</summary>
 
-Before installing, ensure your Linux system has the following tools installed:
-* `gcc` and `make` (for compiling the C backend)
-* `python3` and `pip` (Python package manager)
-* `python3-venv` (for creating a virtual environment)
-* NVIDIA Drivers & `nvidia-smi` (if you want the GPU metrics to work)
+![System Monitor v1](screenshots/v1.png)
+
+</details>
+
+## 📦 Requirements
+
+Tested on **Ubuntu 24.04** and **Linux Mint 22.3**.
+
+Install the system packages:
+
+```bash
+sudo apt update
+sudo apt install build-essential python3 python3-pip python3-venv
+```
+
+Optional, but recommended:
+
+```bash
+# Font used by the UI (if it's missing, the app falls back to DejaVu Sans Mono)
+sudo apt install fonts-jetbrains-mono
+
+# Qt/xcb libraries, only needed if PyQt6 fails to start with an "xcb" plugin error
+sudo apt install libxcb-cursor0
+```
+
+For **GPU monitoring** you need the NVIDIA proprietary drivers, which provide `nvidia-smi`. Without them, the GPU card shows "NVIDIA GPU Not Found" and everything else keeps working.
+
+Python dependencies (installed in step 3 below): `PyQt6`, `pyqtgraph`.
 
 ## 🚀 Installation & Setup
 
 **1. Clone the repository**
 ```bash
 git clone https://github.com/FlaviusMarian27/System-Monitor
-cd linux-system-monitor
+cd System-Monitor
 ```
 
-**2. Compile the C Backend**
-You need to compile the C files into a shared object library (`.so`) so Python can use it:
+**2. Compile the C backend**
 ```bash
 mkdir -p build
-gcc -shared -o build/libmonitor.so -fPIC src/backend/*.c
+gcc -shared -fPIC -o build/libmonitor.so src/backend/*.c
 ```
+> Always recompile after cloning on a new machine. The `.so` file is specific to the system it was built on.
 
-**3. Set up the Python Virtual Environment**
+**3. Set up the Python virtual environment**
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
@@ -54,62 +79,63 @@ pip install -r requirements.txt
 
 ## 🎮 Usage
 
-**To run the application directly from the terminal:**
+**Run from the terminal:**
 ```bash
 chmod +x run.sh
 ./run.sh
 ```
 
-**To create a Desktop Shortcut (Ubuntu/Debian):**
-Run the automated shortcut generator to place the app on your desktop and application menu:
+**Create a desktop shortcut (Ubuntu / Mint / Debian):**
 ```bash
 chmod +x create_shortcut.sh
 ./create_shortcut.sh
 ```
-*After running this, you can just double-click the "Linux System Monitor" icon on your Desktop!*
+*After that, double-click the "Linux System Monitor" icon on your desktop.*
 
 ## 📂 Project Structure
 
 ```text
 System-Monitor/
 │
-├── build/                   # Directory for the generated shared library
-│   └── libmonitor.so        # The compiled C library (.so) used by Python
+├── build/                   # Generated shared library (not committed)
+│   └── libmonitor.so        # The compiled C library used by Python
 │
-├── src/                     # Main source code directory
-│   ├── backend/             # C Backend (Low-level system data extraction)
-│   │   ├── include/         # Header files (.h) defining structs and functions
-│   │   │   ├── core.h       # Main bridge structure sent to Python
-│   │   │   ├── cpu.h        # CPU usage and frequency headers
-│   │   │   ├── disk.h       # Storage headers
-│   │   │   ├── gpu.h        # NVIDIA GPU headers
-│   │   │   ├── memory.h     # RAM usage headers
-│   │   │   ├── network.h    # Live download/upload speed headers
-│   │   │   ├── processes.h  # Active processes headers
-│   │   │   └── sysinfo.h    # Uptime and Kernel headers
+├── screenshots/             # README screenshots (v1, v2)
+│
+├── src/
+│   ├── backend/             # C backend (low-level system data)
+│   │   ├── include/         # Header files (.h)
+│   │   │   ├── core.h       # Main struct sent to Python
+│   │   │   ├── cpu.h        # CPU usage and frequency
+│   │   │   ├── disk.h       # Storage
+│   │   │   ├── gpu.h        # NVIDIA GPU
+│   │   │   ├── memory.h     # RAM usage
+│   │   │   ├── network.h    # Download/upload speed
+│   │   │   ├── processes.h  # Active processes
+│   │   │   └── sysinfo.h    # Uptime and kernel
 │   │   │
-│   │   ├── core.c           # Main backend file that links all modules together
+│   │   ├── core.c           # Links all modules together
 │   │   ├── cpu.c            # Parses /proc/stat and /proc/cpuinfo
-│   │   ├── disk.c           # Reads storage info via statvfs
-│   │   ├── gpu.c            # Extracts GPU data using popen("nvidia-smi")
+│   │   ├── disk.c           # Storage info via statvfs
+│   │   ├── gpu.c            # GPU data via popen("nvidia-smi")
 │   │   ├── memory.c         # Parses /proc/meminfo
-│   │   ├── network.c        # Calculates live network speeds from /proc/net/dev
-│   │   ├── processes.c      # Fetches top CPU processes using popen("ps")
-│   │   └── sysinfo.c        # Native C calls for system uptime and kernel
+│   │   ├── network.c        # Network speeds from /proc/net/dev
+│   │   ├── processes.c      # Top processes from /proc/<pid>/stat
+│   │   └── sysinfo.c        # Uptime and kernel (uname, sysinfo)
 │   │
-│   └── frontend/            # Python Frontend (GUI and Data Visualization)
-│       └── main.py          # The main PyQt6 app (contains UI, gauges, and ctypes bridge)
+│   └── frontend/
+│       └── main.py          # PyQt6 app: UI, gauges, ctypes bridge
 │
-├── .venv/                   # (Auto-generated) Python Virtual Environment
-├── create_shortcut.sh       # Bash script to create a trusted Desktop shortcut
-├── icon.png                 # Application logo/icon
-├── README.md                # Project documentation for GitHub
+├── .venv/                   # Python virtual environment (not committed)
+├── create_shortcut.sh       # Creates a trusted desktop shortcut
+├── icon.png                 # App icon
+├── README.md
 ├── requirements.txt         # Python dependencies (PyQt6, pyqtgraph)
-└── run.sh                   # Master script to compile C code and launch the app
+└── run.sh                   # Activates the venv and starts the app
 ```
 
 ## 🤝 Contributing
-Feel free to fork this project, submit pull requests, or open an issue if you find a bug!
+Feel free to fork the project, open a pull request, or open an issue if you find a bug.
 
 ## 📜 License
 This project is open-source and available under the MIT License.
